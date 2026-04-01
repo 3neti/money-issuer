@@ -2,8 +2,9 @@
 
 namespace LBHurtado\MoneyIssuer;
 
-use Illuminate\Support\ServiceProvider;
+use LBHurtado\EmiCore\Contracts\BankRegistryContract;
 use LBHurtado\MoneyIssuer\Support\BankRegistry;
+use Illuminate\Support\ServiceProvider;
 
 /**
  * Money Issuer Service Provider
@@ -20,8 +21,11 @@ class MoneyIssuerServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        // Register BankRegistry singleton
         $this->app->singleton(BankRegistry::class, fn () => new BankRegistry);
+
+        $this->app->singleton(BankRegistryContract::class, function ($app) {
+            return $app->make(BankRegistry::class);
+        });
 
         // Merge bank restrictions config
         $this->mergeConfigFrom(

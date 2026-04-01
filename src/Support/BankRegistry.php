@@ -2,10 +2,11 @@
 
 namespace LBHurtado\MoneyIssuer\Support;
 
+use LBHurtado\EmiCore\Contracts\BankRegistryContract;
+use LBHurtado\EmiCore\Enums\SettlementRail;
 use Illuminate\Support\Collection;
-use LBHurtado\PaymentGateway\Enums\SettlementRail;
 
-class BankRegistry
+class BankRegistry implements BankRegistryContract
 {
     protected array $banks;
 
